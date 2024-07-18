@@ -1,5 +1,5 @@
 Output/Release/Obj/ble_app_uart_pca10040e_nrf52805_s112/main.o: \
- C:\Users\LigalBerni\MasterControllerNRF2805\nRF5_SDK_Current\examples\myExample\ble_app_uart\main.c \
+ C:\Users\LigalBerni\BLE\nRF5_SDK_Current\examples\myExample\ble_app_uart\main.c \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.32a/include/stdint.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.32a/include/__SEGGER_RTL.h \
  C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 7.32a/include/__SEGGER_RTL_ConfDefaults.h \

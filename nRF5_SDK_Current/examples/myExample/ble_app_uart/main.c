@@ -88,7 +88,7 @@
 
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define DEVICE_NAME                     "BLE_REV_0_0_0_P"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "BLE_REV_0_0_1_P"                               /**< Name of device. Will be included in the advertising data. */
 #define NUS_SERVICE_UUID_TYPE           BLE_UUID_TYPE_VENDOR_BEGIN                  /**< UUID type for the Nordic UART Service (vendor specific). */
 
 #define APP_BLE_OBSERVER_PRIO           3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
@@ -125,9 +125,10 @@ static ble_uuid_t m_adv_uuids[]          =                                      
 };
 
 
-#define BLE_INT_PIN_NUMBER  14
-#define BLE_ENTER_SLEEP_MODE_PIN_4  4
-#define BLE_GPIO_OO5_EXIT_SLEEP_MODE           5
+static uint8_t counter = 0;
+#define BLE_INT_PIN_NUMBER          14
+#define BLE_ENTER_SLEEP_MODE_PIN_4   4
+#define BLE_GPIO_OO5_EXIT_SLEEP_MODE 5
 
 
 #define SYSTEM_CONFIGURATIOM      20               //output
@@ -236,8 +237,15 @@ static void delay_timer__interrupt_handler(void * p_context) {
 }
 
 static void timer_timeout_handler(void * p_context){
-  nrf_gpio_pin_clear(BLE_INT_PIN_NUMBER);
-  app_timer_start(my_delay_timer_id, APP_TIMER_TICKS(500), NULL);  // Assuming my_delay_timer_id is another timer configured for one-shot delay
+    const uint8_t clearCounter = 7;
+    if(counter == clearCounter){
+        counter = 0;
+        nrf_gpio_pin_clear(BLE_INT_PIN_NUMBER);
+        app_timer_start(my_delay_timer_id, APP_TIMER_TICKS(500), NULL);  // Assuming my_delay_timer_id is another timer configured for one-shot delay
+    }
+  else{
+    counter++;
+  }
 }
 
 
@@ -258,7 +266,7 @@ static void timers_init(void)
     err_code = app_timer_create(&my_timer_interrupt, APP_TIMER_MODE_SINGLE_SHOT, delay_timer__interrupt_handler);
     APP_ERROR_CHECK(err_code);
 
-    uint32_t time_ms = 4 * 60 * 60 *  1000;  // 4 hours in milliseconds
+    uint32_t time_ms = 30 * 60 *  1000;  // 30 minutes in milliseconds
     uint32_t time_ticks = APP_TIMER_TICKS(time_ms);
 
     // Start the timer with the defined duration.
